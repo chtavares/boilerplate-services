@@ -1,0 +1,29 @@
+version: '3.7'
+
+networks:
+  services:
+    external: true
+    name: 'services'
+
+services:
+  aws:
+    networks:
+      - services
+    image: localstack/localstack
+    logging:
+      driver: none
+    ports:
+      - 63022:4566
+    environment:
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - SERVICES=sqs,sns,dynamodb
+      - DEFAULT_REGION=us-west-1
+      - HOSTNAME_EXTERNAL=aws
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+      - './volumes/private${TMPDIR}:/tmp/localstack'
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: 512M

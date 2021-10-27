@@ -1,0 +1,6 @@
+/dist
+/logs
+/node_modules
+/provision
+/volumes
+docker*

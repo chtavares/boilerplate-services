@@ -1,0 +1,12 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      nodejs: 14
+    commands:
+      - npm run build
+      - aws cloudformation package --template-file dist/serverless.json --s3-bucket services-build --output-template-file outputTemplate.yaml
+artifacts:
+  type: zip
+  files:
+    - outputTemplate.yaml

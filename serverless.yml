@@ -1,0 +1,22 @@
+service:
+  name: serverless-example
+plugins:
+  - serverless-offline
+  # - serverless-offline-schedule
+provider:
+  name: aws
+  runtime: nodejs12.x
+functions:
+  api:
+    handler: dist/main.apiHandler
+    events:
+      - http:
+          method: ANY
+          path: /
+      - http:
+          method: ANY
+          path: '{proxy+}'
+  cron:
+    handler: dist/main.cronHandler
+    events:
+      - schedule: rate(1 minute)
